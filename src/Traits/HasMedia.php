@@ -2,6 +2,6 @@
 
 namespace Aammui\LaravelMedia\Traits;
 
-class HasMedia
+trait HasMedia
 {
 }

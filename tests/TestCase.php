@@ -1,6 +1,6 @@
 <?php
 
-namespace Aammui\MediaHandle\Tests;
+namespace Aammui\LaravelMedia\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as BaseTestCase;
@@ -41,8 +41,6 @@ class TestCase extends BaseTestCase
     {
         $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
-            $table->softDeletes();
         });
 
         require_once __DIR__ . "/../database/migrations/2018_08_01_054830_create_medias_table.php";

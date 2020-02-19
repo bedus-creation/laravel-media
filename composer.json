@@ -17,7 +17,8 @@
     "license": "MIT",
     "type": "library",
     "require": {
-        "php": "^7.1"
+        "php": "^7.2",
+        "illuminate/database": "^5.8|^6.0|^7.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

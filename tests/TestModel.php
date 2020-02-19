@@ -9,7 +9,6 @@ class TestModel extends Model
 {
     use HasMedia;
 
-    protected $fillable = ['email'];
-
+    protected $table = "users";
     public $timestamps = false;
 }
