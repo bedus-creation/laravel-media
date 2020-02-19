@@ -7,22 +7,22 @@ use HasMedia;
 
 $user->addMedia(request()->file);
 $user->addMedia([request()->file1,request()->file2]);
-$user->addMedia(request()->file)
-    ->toCollection('profilePicture');
-$user->addMedia(request()->file)
-    ->toCollection('profilePicture')
-    ->toStorage('s3');
-$user->addMedia(request()->file)
-    ->toCollection('profilePicture')
-    ->toStorage('local');
+$user->toCollection('profilePicture')
+    ->addMedia(request()->file);
+$user->toCollection('profilePicture')
+    ->toStorage('s3')
+    ->addMedia(request()->file);
+$user->toCollection('profilePicture')
+    ->toStorage('local')
+    ->addMedia(request()->file);
 ```
 
 ### Retrive media from your model
 ```
 $user->getMedia();
-$user->getMedia()
-    ->fromCollection('profilePicture')
-    ->fromStorage('local');
+$user->fromCollection('profilePicture')
+    ->fromStorage('local')
+    ->getMedia();
 ```
 ### Setup Responsive images
 ```
