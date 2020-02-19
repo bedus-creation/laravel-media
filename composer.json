@@ -1,0 +1,45 @@
+{
+    "name": "aammui/laravel-media",
+    "description": "Laravel beautiful admin panel",
+    "keywords": [
+        "aammui",
+        "media",
+        "media-uploader",
+        "file-uploader"
+    ],
+    "authors": [
+        {
+            "name": "Bedram Tamang",
+            "email": "tmgbedu@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/bedus-creation/MediaHandle",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.1",
+        "phpunit/phpunit": "^7",
+        "orchestra/testbench": "^3.5",
+        "orchestra/database": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aammui\\LaravelMedia\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aammui\\LaravelMedia\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aammui\\LaravelMedia\\LaravelMediaServiceProvider"
+            ]
+        }
+    }
+}
