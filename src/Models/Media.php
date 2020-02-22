@@ -12,13 +12,16 @@ class Media extends Model
 
     public function getPath($type = 'small')
     {
-        return optional(json_decode($this->in_json)->url)->$type ??
-            optional(json_decode($this->in_json)->url)->small ??
-            optional(json_decode($this->in_json)->url)->medium;
+        return optional(json_decode($this->in_json)->path)->$type ??
+            optional(json_decode($this->in_json)->path)->small ??
+            optional(json_decode($this->in_json)->path)->medium;
     }
 
     public function link($type = 'small', $image = null)
     {
-        return $this->base_url . $this->getPath($type);
+        $url = optional(json_decode($this->in_json)->url)->$type ??
+            optional(json_decode($this->in_json)->url)->small ??
+            optional(json_decode($this->in_json)->url)->medium;
+        return $this->base_url . $url;
     }
 }

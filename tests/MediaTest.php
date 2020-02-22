@@ -47,4 +47,14 @@ class MediaTest extends TestCase
         $this->assertEquals(1, $model->fromCollection('cover')->getMedia()->count());
         $this->assertEquals(3, $model->getMedia()->count());
     }
+
+    /** @test */
+    public function media_can_add_from_path()
+    {
+        $path = __DIR__ . '/TestFiles/sample.pdf';
+        $model = TestModel::create();
+        $model->toCollection('profile')
+            ->addMediaFromPath($path);
+        $this->assertEquals(1, $model->getMedia()->count());
+    }
 }

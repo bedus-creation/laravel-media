@@ -30,6 +30,19 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+        $app['config']->set('filesystems.default', 'local');
+        $app['config']->set('filesystems.disks', [
+            'local' => [
+                'driver' => 'local',
+                'root' => __DIR__ . '/../storage/app',
+            ],
+            'public' => [
+                'driver' => 'local',
+                'root' => __DIR__ . '/../storage/app/public',
+                'url' => env('APP_URL') . '/storage',
+                'visibility' => 'public',
+            ],
+        ]);
     }
 
     /**

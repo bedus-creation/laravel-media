@@ -4,6 +4,7 @@ namespace Aammui\LaravelMedia\Traits;
 
 use Aammui\LaravelMedia\Models\Media;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 trait HasMedia
 {
@@ -13,7 +14,11 @@ trait HasMedia
 
     public function media()
     {
-        return $this->morphMany(Media::class, 'model')->where($this->query);
+        $query = $this->morphMany(Media::class, 'model');
+        if (!empty($this->query)) {
+            $query = $query->where($this->query);
+        };
+        return $query;
     }
 
     public function toCollection($name)
@@ -33,12 +38,7 @@ trait HasMedia
      */
     public function addMedia($file)
     {
-        $fileUid = $file->storeAs(
-            'documents',
-            preg_replace('/.[^ .] * $ / ', ' ', $file->hashName()) . '.' . $file->getClientOriginalExtension(),
-            'public'
-        );
-
+        $fileUid = Storage::disk('public')->putFileAs('documents', $file, $file->hashName());
         $media = $this->media()->create([
             'disk' => 'local',
             'collection' => $this->toCollection,
@@ -50,6 +50,11 @@ trait HasMedia
                     'small' => Storage::url($fileUid),
                     'medium' => Storage::url($fileUid),
                     'big' => Storage::url($fileUid),
+                ],
+                'path' => [
+                    'small' => storage_path('app/public') . '/' . $fileUid,
+                    'medium' => storage_path('app/public') . '/' . $fileUid,
+                    'big' => storage_path('app/public') . '/' . $fileUid,
                 ]
             ]),
         ]);
@@ -62,5 +67,11 @@ trait HasMedia
         $media = $this->media()->get();
         $this->query = [];
         return $media;
+    }
+
+    public function addMediaFromPath($path)
+    {
+        $file = new File($path);
+        return $this->addMedia($file);
     }
 }
