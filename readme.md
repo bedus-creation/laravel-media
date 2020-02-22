@@ -34,3 +34,13 @@ $user->fromCollection('profilePicture')
 ```
 'optimize'=>true
 ```
+
+### Installation
+```
+composer require aammui/laravel-media
+```
+### Publish assests
+```
+php artisan vendor:publish --provider="Aammui\LaravelMedia\LaravelMediaServiceProvider"
+php artisan migrate
+```

@@ -7,6 +7,7 @@ use Aammui\LaravelMedia\Tests\TestModel;
 use Aammui\LaravelMedia\Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class MediaTest extends TestCase
 {
@@ -30,5 +31,20 @@ class MediaTest extends TestCase
         $this->assertInstanceOf(Collection::class, $model->getMedia());
         $this->assertInstanceOf(Media::class, $model->getMedia()->first());
         $this->assertEquals(2, $model->getMedia()->count());
+    }
+
+    /** @test */
+    public function media_can_add_to_collection()
+    {
+        $image = UploadedFile::fake()->image('avatar.jpg');
+        $model = TestModel::create();
+        $model->toCollection('profile')
+            ->addMedia($image);
+        $model->toCollection('cover')
+            ->addMedia($image);
+        $model->addMedia($image);
+        $this->assertEquals(1, $model->fromCollection('profile')->getMedia()->count());
+        $this->assertEquals(1, $model->fromCollection('cover')->getMedia()->count());
+        $this->assertEquals(3, $model->getMedia()->count());
     }
 }

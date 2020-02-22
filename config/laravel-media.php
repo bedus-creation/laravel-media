@@ -1,7 +1,9 @@
 <?php
 return [
     'responsive' => [
-        '50*50', '100*100', '600*600'
+        'small' => '50*50',
+        'medium' => '300*300',
+        'big' => '600*600'
     ],
     'optimize' => true
 ];
