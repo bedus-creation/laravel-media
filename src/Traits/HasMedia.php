@@ -29,6 +29,12 @@ trait HasMedia
         return $query;
     }
 
+    public function toDisk($name)
+    {
+        $this->_disk = $name;
+        return $this;
+    }
+
     public function toCollection($name)
     {
         $this->_collection = $name;
