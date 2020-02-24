@@ -8,28 +8,36 @@ use Illuminate\Http\File;
 
 trait HasMedia
 {
-    protected $toCollection;
+    protected $_collection;
 
-    protected $query;
+    /** Base URL for media */
+    protected $_host;
+
+    protected $_disk = "local";
+
+    protected $_query;
+
+    /** Set download true or false */
+    protected $_download;
 
     public function media()
     {
         $query = $this->morphMany(Media::class, 'model');
-        if (!empty($this->query)) {
-            $query = $query->where($this->query);
+        if (!empty($this->_query)) {
+            $query = $query->where($this->_query);
         };
         return $query;
     }
 
     public function toCollection($name)
     {
-        $this->toCollection = $name;
+        $this->_collection = $name;
         return $this;
     }
 
     public function fromCollection($name)
     {
-        $this->query['collection'] = $name;
+        $this->_query['collection'] = $name;
         return $this;
     }
 
@@ -38,34 +46,17 @@ trait HasMedia
      */
     public function addMedia($file)
     {
-        $fileUid = Storage::disk('public')->putFileAs('documents', $file, $file->hashName());
-        $media = $this->media()->create([
-            'disk' => 'local',
-            'collection' => $this->toCollection,
-            'model_id' => $this->id,
-            'model_type' => get_class($this),
-            'base_url' => url('/'),
-            'in_json' => json_encode([
-                'url' => [
-                    'small' => Storage::url($fileUid),
-                    'medium' => Storage::url($fileUid),
-                    'big' => Storage::url($fileUid),
-                ],
-                'path' => [
-                    'small' => storage_path('app/public') . '/' . $fileUid,
-                    'medium' => storage_path('app/public') . '/' . $fileUid,
-                    'big' => storage_path('app/public') . '/' . $fileUid,
-                ]
-            ]),
-        ]);
-        $this->toCollection = null;
+        $fileUid = Storage::disk($this->_disk)
+            ->putFileAs('documents', $file, $file->hashName());
+        $media = $this->createMedia($fileUid);
+        $this->_collection = null;
         return $media;
     }
 
     public function getMedia()
     {
         $media = $this->media()->get();
-        $this->query = [];
+        $this->_query = [];
         return $media;
     }
 
@@ -75,11 +66,43 @@ trait HasMedia
         return $this->addMedia($file);
     }
 
-    public function addMediaFromUrl($path)
+    public function addMediaFromUrl($url)
     {
-        $content = file_get_contents($path);
-        $file = tmpfile();
-        $path = stream_get_meta_data($file)['uri'];
-        return $this->addMediaFromPath($path);
+        $url = parse_url($url);
+        $this->_host =  $url['scheme'] . '://' . $url['host'];
+        $path =  $url['path'];
+        return $this->createMedia(null, $path, $path);
+        // $content = file_get_contents($path);
+        // $file = tmpfile();
+        // $path = stream_get_meta_data($file)['uri'];
+        // return $this->addMediaFromPath($path);
+    }
+
+    /**
+     * Insert into media Database
+     * @param mixed $fileUid 
+     * @return Media 
+     */
+    private function createMedia($fileUid, $url = null, $path = null)
+    {
+        return $this->media()->create([
+            'disk' => 'local',
+            'collection' => $this->_collection,
+            'model_id' => $this->id,
+            'model_type' => get_class($this),
+            'base_url' => $this->_host ?? url('/'),
+            'in_json' => json_encode([
+                'url' => [
+                    'small' => $url ?? Storage::url($fileUid),
+                    'medium' => $url ?? Storage::url($fileUid),
+                    'big' => $url ?? Storage::url($fileUid),
+                ],
+                'path' => [
+                    'small' => $path ?? storage_path('app/public') . '/' . $fileUid,
+                    'medium' => $path ?? storage_path('app/public') . '/' . $fileUid,
+                    'big' => $path ?? storage_path('app/public') . '/' . $fileUid,
+                ]
+            ]),
+        ]);
     }
 }
