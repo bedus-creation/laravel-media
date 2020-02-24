@@ -4,8 +4,8 @@ Laravel Media Handler package.
 ### Content
 1. [Installtion](https://github.com/bedus-creation/laravel-media#installation)
 2. [Publish Assets and Migration](https://github.com/bedus-creation/laravel-media#publish-assests)
-3. [Use Trait in model](https://github.com/bedus-creation/laravel-media#add-media-to-your-model)
-4. [Call from anywhere](https://github.com/bedus-creation/laravel-media#use-with-model-from-whereever)
+3. [Use Trait in model](https://github.com/bedus-creation/laravel-media#add-hasmedia-trait-to-your-model)
+4. [Call from anywhere](https://github.com/bedus-creation/laravel-media#use-with-model-form-whereever)
 
 ### Add ```HasMedia``` Trait to your model.
 ```
