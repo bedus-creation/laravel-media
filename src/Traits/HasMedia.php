@@ -74,4 +74,12 @@ trait HasMedia
         $file = new File($path);
         return $this->addMedia($file);
     }
+
+    public function addMediaFromUrl($path)
+    {
+        $content = file_get_contents($path);
+        $file = tmpfile();
+        $path = stream_get_meta_data($file)['uri'];
+        return $this->addMediaFromPath($path);
+    }
 }

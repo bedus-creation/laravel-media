@@ -57,4 +57,21 @@ class MediaTest extends TestCase
             ->addMediaFromPath($path);
         $this->assertEquals(1, $model->getMedia()->count());
     }
+
+    /** @test */
+    public function media_can_add_from_url()
+    {
+        $url = "http://www.africau.edu/images/default/sample.pdf";
+        $model = TestModel::create();
+        $model->toCollection('profile')
+            ->addMediaFromUrl($url);
+        $model->toCollection('image')
+            ->addMediaFromUrl("http://esikai.com/storage/documents/ya7Sl6DTqJPgQZ06wLKPQr2Thf26V1snFRseU70w.jpeg");
+        $this->assertEquals(2, $model->getMedia()->count());
+        // $this->assertEquals(
+        //     "https://picsum.photos/200/300",
+        //     $model->fromCollection('image')
+        //         ->getMedia()->first()->link()
+        // );
+    }
 }
