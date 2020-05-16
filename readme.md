@@ -24,10 +24,10 @@ $user->addMedia([request()->file1,request()->file2]);
 $user->toCollection('profilePicture')
     ->addMedia(request()->file);
 $user->toCollection('profilePicture')
-    ->toStorage('s3')
+     ->toDisk('public')
     ->addMedia(request()->file);
 $user->toCollection('profilePicture')
-    ->toStorage('local')
+     ->toDisk('public')
     ->addMedia(request()->file);
 ```
 ### Add Media From URL
