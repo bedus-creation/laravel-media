@@ -30,4 +30,29 @@ class StandAloneMediaTest extends TestCase
         $this->assertEquals(1, Media::fromCollection('cover')->getMedia()->count());
         $this->assertEquals(3, Media::getMedia()->count());
     }
+
+    /** @test */
+    public function standalone_media_can_add_from_path()
+    {
+        $path = __DIR__ . '/TestFiles/sample.pdf';
+        Media::toCollection('profile')
+            ->addMediaFromPath($path);
+        $this->assertEquals(1, Media::getMedia()->count());
+    }
+
+    /** @test */
+    public function media_can_add_from_url()
+    {
+        $url = "http://www.africau.edu/images/default/sample.pdf";
+        Media::toCollection('profile')
+            ->addMediaFromUrl($url);
+        Media::toCollection('image')
+            ->addMediaFromUrl("https://picsum.photos/200/300");
+        $this->assertEquals(2, Media::getMedia()->count());
+        $this->assertEquals(
+            "https://picsum.photos/200/300",
+            Media::fromCollection('image')
+                ->getMedia()->first()->link()
+        );
+    }
 }

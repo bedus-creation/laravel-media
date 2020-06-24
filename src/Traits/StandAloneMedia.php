@@ -3,6 +3,7 @@
 namespace Aammui\LaravelMedia\Traits;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 trait StandAloneMedia
 {
@@ -65,10 +66,12 @@ trait StandAloneMedia
         $this->_host =  $url['scheme'] . '://' . $url['host'];
         $path =  $url['path'];
         return $this->createMedia(null, $path, $path);
-        // $content = file_get_contents($path);
-        // $file = tmpfile();
-        // $path = stream_get_meta_data($file)['uri'];
-        // return $this->addMediaFromPath($path);
+    }
+
+    public function addMediaFromPath($path)
+    {
+        $file = new File($path);
+        return $this->addMedia($file);
     }
 
     /**

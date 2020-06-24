@@ -6,7 +6,7 @@ Laravel Media Handler package.
 2. [Publish Assets and Migration](https://github.com/bedus-creation/laravel-media#publish-assests)
 3. [Use Trait in model](https://github.com/bedus-creation/laravel-media#add-hasmedia-trait-to-your-model)
 4. [Call from anywhere](https://github.com/bedus-creation/laravel-media#use-with-model-form-whereever)
-5. [Standalone Storing Media](https://github.com/bedus-creation/laravel-media#standalone-storing-media)
+5. [Standalone Media](https://github.com/bedus-creation/laravel-media#standalone-media)
 
 ### Add ```HasMedia``` Trait to your model.
 ```
@@ -19,7 +19,7 @@ class Document extends Model
 }
 ```
 ### Use with model form whereever.
-```
+```php
 $user->addMedia(request()->file);
 $user->toCollection('profilePicture')
     ->addMedia(request()->file);
@@ -32,11 +32,11 @@ $user->toCollection('profilePicture')
 ```
 ### Add Media From URL
 ```This doesnot download media into your storage.``` It just add url to the database and when your application serve, media will load from remote url.
-```
+```php
 $user->addMediaFromUrl('http://example.com/image.jpeg');
 ```
 ##### Download and Add Media From Remote URL.
-```
+```php
 $user->setDownloadTrue()
     ->addMediaFromUrl('http://example.com/image.jpeg');
 ```
@@ -59,12 +59,13 @@ $user->fromCollection('profilePicture')
 'optimize'=>true
 ```
 
-### Standalone Storing Media
+### Standalone Media
 Suppose you want to add file which doesnot belong to any model, then you can create standalone media. Use case could be you are storing images in description of some products in ecommerce shop, Where you simply store images in database before the product form is submitted via api, which returns public image url. 
 
 ```php
+use Aammui\LaravelMedia\Facades\Media; // Use Media facade instead
+
 Media::addMedia(request()->file); // returns Media Object
-Media::addMedia([request()->file1,request()->file2]); // Returns Media Object Collection
 Media::toCollection('profilePicture')
     ->addMedia(request()->file); // returns Media Object while storing grouping files in profilepicture
 Media::toCollection('profilePicture')
