@@ -2,6 +2,7 @@
 
 namespace Aammui\LaravelMedia\Tests;
 
+use Aammui\LaravelMedia\LaravelMediaServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -43,6 +44,18 @@ class TestCase extends BaseTestCase
                 'visibility' => 'public',
             ],
         ]);
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            LaravelMediaServiceProvider::class
+        ];
     }
 
     /**

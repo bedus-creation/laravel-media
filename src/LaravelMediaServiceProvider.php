@@ -2,10 +2,19 @@
 
 namespace Aammui\LaravelMedia;
 
+use Aammui\LaravelMedia\Models\Media;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelMediaServiceProvider extends ServiceProvider
 {
+    /**
+     * Register Services
+     */
+    public function register()
+    {
+        $this->app->bind('media', Media::class);
+    }
+
     /**
      * Bootstrap services.
      *
@@ -13,10 +22,6 @@ class LaravelMediaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->publishes([
-        //     __DIR__ . '/../config/role-permission.php' => config_path('role-permission.php')
-        // ], 'config');
-
         $this->publishes([
             __DIR__ . '/../database/migrations/' => database_path('migrations')
         ], 'migrations');

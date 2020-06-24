@@ -2,13 +2,17 @@
 
 namespace Aammui\LaravelMedia\Models;
 
+use Aammui\LaravelMedia\Traits\StandAloneMedia;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
+    use StandAloneMedia;
+
     protected $table = "medias";
 
     protected $fillable = ['disk', 'in_json', 'base_url', 'url', 'collection', 'model_type', 'model_id'];
+
 
     public function getPath($type = 'small')
     {

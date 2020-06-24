@@ -21,7 +21,6 @@ class Document extends Model
 ### Use with model form whereever.
 ```
 $user->addMedia(request()->file);
-$user->addMedia([request()->file1,request()->file2]);
 $user->toCollection('profilePicture')
     ->addMedia(request()->file);
 $user->toCollection('profilePicture')
