@@ -12,7 +12,7 @@ Laravel Media Handler package.
 ```
 use Aammui\LaravelMedia\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Model;
-
+ 
 class Document extends Model
 {
     use HasMedia;
