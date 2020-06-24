@@ -16,7 +16,7 @@ class CreateMediasTable extends Migration
         Schema::create('medias', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->morphs('model');
+            $table->nullableMorphs('model');
             $table->string('base_url');
             $table->string('disk');
             $table->text('in_json')->nullable();

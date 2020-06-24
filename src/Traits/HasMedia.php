@@ -13,7 +13,7 @@ trait HasMedia
     /** Base URL for media */
     protected $_host;
 
-    protected $_disk = "local";
+    protected $_disk = "public";
 
     protected $_query;
 
