@@ -2,8 +2,11 @@
 
 namespace Aammui\LaravelMedia\Models;
 
+use Aammui\LaravelMedia\Enum\Extension;
+use Aammui\LaravelMedia\Enum\Responsive;
 use Aammui\LaravelMedia\Traits\StandAloneMedia;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Media extends Model
 {
@@ -13,19 +16,20 @@ class Media extends Model
 
     protected $fillable = ['disk', 'in_json', 'base_url', 'url', 'collection', 'model_type', 'model_id'];
 
+    protected $casts = [
+        'in_json' => 'object',
+    ];
 
-    public function getPath($type = 'small')
+    /**
+     * @param string $type
+     * @param null   $image
+     *
+     * @return string
+     */
+    public function link($type = Responsive::SM, $image = null): string
     {
-        return optional(json_decode($this->in_json)->path)->$type ??
-            optional(json_decode($this->in_json)->path)->small ??
-            optional(json_decode($this->in_json)->path)->medium;
-    }
+        $url = Arr::get(json_decode($this->in_json, true), "url.{$type}");
 
-    public function link($type = 'small', $image = null)
-    {
-        $url = optional(json_decode($this->in_json)->url)->$type ??
-            optional(json_decode($this->in_json)->url)->small ??
-            optional(json_decode($this->in_json)->url)->medium;
-        return $this->base_url . $url;
+        return $this->base_url.$url;
     }
 }

@@ -13,6 +13,10 @@ class LaravelMediaServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('media', Media::class);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/laravel-media.php', 'laravel-media'
+        );
     }
 
     /**

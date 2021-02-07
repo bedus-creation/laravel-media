@@ -21,10 +21,8 @@ class StandAloneMediaTest extends TestCase
     public function standalone_media_can_add_to_collection()
     {
         $image = UploadedFile::fake()->image('avatar.jpg');
-        Media::toCollection('profile')
-            ->addMedia($image);
-        Media::toCollection('cover')
-            ->addMedia($image);
+        Media::toCollection('profile')->addMedia($image);
+        Media::toCollection('cover')->addMedia($image);
         Media::addMedia($image);
         $this->assertEquals(1, Media::fromCollection('profile')->getMedia()->count());
         $this->assertEquals(1, Media::fromCollection('cover')->getMedia()->count());
@@ -34,9 +32,8 @@ class StandAloneMediaTest extends TestCase
     /** @test */
     public function standalone_media_can_add_from_path()
     {
-        $path = __DIR__ . '/TestFiles/sample.pdf';
-        Media::toCollection('profile')
-            ->addMediaFromPath($path);
+        $path = __DIR__.'/TestFiles/sample.pdf';
+        Media::toCollection('profile')->addMediaFromPath($path);
         $this->assertEquals(1, Media::getMedia()->count());
     }
 
@@ -44,15 +41,15 @@ class StandAloneMediaTest extends TestCase
     public function media_can_add_from_url()
     {
         $url = "http://www.africau.edu/images/default/sample.pdf";
-        Media::toCollection('profile')
-            ->addMediaFromUrl($url);
-        Media::toCollection('image')
-            ->addMediaFromUrl("https://picsum.photos/200/300");
+        Media::toCollection('profile')->addMediaFromUrl($url);
+
+
+        $url = "https://picsum.photos/200/300";
+        Media::toCollection('image')->addMediaFromUrl($url);
         $this->assertEquals(2, Media::getMedia()->count());
         $this->assertEquals(
-            "https://picsum.photos/200/300",
-            Media::fromCollection('image')
-                ->getMedia()->first()->link()
+            $url,
+            Media::fromCollection('image')->getMedia()->first()->link()
         );
     }
 }

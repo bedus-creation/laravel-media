@@ -3,7 +3,9 @@
 namespace Aammui\LaravelMedia\Tests;
 
 use Aammui\LaravelMedia\LaravelMediaServiceProvider;
+use CreateMediasTable;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -19,7 +21,7 @@ class TestCase extends BaseTestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -47,11 +49,11 @@ class TestCase extends BaseTestCase
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelMediaServiceProvider::class
@@ -61,7 +63,7 @@ class TestCase extends BaseTestCase
     /**
      * Set up the database.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function setUpDatabase($app)
     {
@@ -70,6 +72,6 @@ class TestCase extends BaseTestCase
         });
 
         require_once __DIR__ . "/../database/migrations/2018_08_01_054830_create_medias_table.php";
-        (new \CreateMediasTable())->up();
+        (new CreateMediasTable())->up();
     }
 }
