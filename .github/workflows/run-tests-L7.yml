@@ -1,6 +1,6 @@
 name: "Run Tests - Current"
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   test:
@@ -8,16 +8,21 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 7.4]
-        laravel: [8.*]
-        dependency-version: [prefer-lowest, prefer-stable]
+        php: [ 8.0, 7.4, 7.3, 7.2]
+        laravel: [7.*,6.*]
+        dependency-version: [ prefer-lowest, prefer-stable ]
         include:
-          - laravel: 8.*
-            testbench: 6.*
+          - laravel: 7.*
+            testbench: 5.*
+          - laravel: 6.*
+            testbench: 4.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
     steps:
+      - name: Update apt
+        run: sudo apt-get update --fix-missing
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -31,7 +36,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, iconv
+          extensions: gd, curl, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, iconv
           coverage: none
 
       - name: Install dependencies
