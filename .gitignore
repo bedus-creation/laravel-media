@@ -3,3 +3,4 @@ storage
 
 .idea
 .run
+.phpunit.result.cache
