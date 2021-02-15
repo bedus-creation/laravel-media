@@ -30,6 +30,6 @@ class Media extends Model
     {
         $url = Arr::get(json_decode($this->in_json, true), "url.{$type}");
 
-        return $this->base_url."/".$url;
+        return $this->base_url.$url;
     }
 }
