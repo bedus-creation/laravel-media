@@ -63,7 +63,7 @@ class ImageStorageService extends BaseStorageService implements FileStorageInter
 
                 $this->resizeImage($image, $key, $path, $disk);
 
-                return $path;
+                return "/".$path;
             }
         )->toArray();
     }
