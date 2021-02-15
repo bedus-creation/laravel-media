@@ -69,6 +69,7 @@ class MediaTest extends TestCase
     {
         $url   = "http://www.africau.edu/images/default/sample.pdf";
         $model = TestModel::create();
+
         $model->toCollection('document')->addMediaFromUrl($url);
         $this->assertEquals(
             $url,

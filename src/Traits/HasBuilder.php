@@ -41,7 +41,7 @@ trait HasBuilder
      *
      * @return $this
      */
-    public function toDisk($name): HasBuilder
+    public function toDisk($name)
     {
         $this->_disk = $name;
 
