@@ -23,12 +23,14 @@ class DefaultStorageService extends BaseStorageService implements FileStorageInt
      */
     public function store($file, string $disk): array
     {
-        $path = "/documents/".$file->hashName();
+        $path = "/documents";
 
         parent::upload($disk, $path, $file);
 
+        $fileHash = $file->hashName();
+
         return [
-            "url" => $this->prepareURL($path),
+            "url" => $this->prepareURL($path, $fileHash),
         ];
     }
 
@@ -37,13 +39,13 @@ class DefaultStorageService extends BaseStorageService implements FileStorageInt
      *
      * @return Collection
      */
-    public function prepareURL($path): Collection
+    public function prepareURL($path, $fileHash): Collection
     {
         $sizes = Responsive::getConfig();
 
         return collect($sizes)->map(
-            function ($value, $key) use ($path) {
-                return $path;
+            function ($value, $key) use ($path, $fileHash) {
+                return $path . "/" . $fileHash;
             }
         );
     }
