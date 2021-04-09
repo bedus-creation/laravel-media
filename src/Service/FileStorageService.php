@@ -29,12 +29,13 @@ class FileStorageService
     protected $disk;
 
     /**
+     * @param UploadedFile|File $file
+     * @param string            $disk
+     *
      * @todo implement type check with minimum PHP 8
      *
      * FileStorageService constructor.
      *
-     * @param UploadedFile|File $file
-     * @param string            $disk
      */
     public function __construct($file, string $disk)
     {
@@ -48,12 +49,9 @@ class FileStorageService
     public function initStorageService()
     {
         $extension = $this->file->guessExtension();
-
-        if ( Extension::isImage($extension) ) {
+        if (Extension::isImage($extension)) {
             $this->imageStorageService();
-        }
-
-        if ( Extension::isDocument($extension) ) {
+        } else {
             $this->defaultStorageService();
         }
     }

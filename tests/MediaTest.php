@@ -55,11 +55,11 @@ class MediaTest extends TestCase
      */
     public function media_can_add_from_path()
     {
-//        $path = __DIR__ . '/TestFiles/sample.pdf';
-//        $model = TestModel::create();
-//        $model->toCollection('profile')
-//            ->addMediaFromPath($path);
-//        $this->assertEquals(1, $model->getMedia()->count());
+        //        $path = __DIR__ . '/TestFiles/sample.pdf';
+        //        $model = TestModel::create();
+        //        $model->toCollection('profile')
+        //            ->addMediaFromPath($path);
+        //        $this->assertEquals(1, $model->getMedia()->count());
 
         $this->markTestSkipped();
     }

@@ -28,8 +28,14 @@ class Media extends Model
      */
     public function link($type = Responsive::SM, $image = null): string
     {
-        $url = Arr::get(json_decode($this->in_json, true), "url.{$type}");
+        $json = $this->in_json;
 
-        return $this->base_url.$url;
+        if (!is_array($json)) {
+            $json = json_decode($json, true);
+        }
+
+        $url = Arr::get($json, "url.{$type}") ?? Arr::get($json, "url.small") ?? Arr::get($json, "url.medium") ?? Arr::get($json, "url.big") ?? "assets/img/icon.png";
+
+        return $this->base_url . $url;
     }
 }
