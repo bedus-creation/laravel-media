@@ -17,7 +17,7 @@ class Media extends Model
     protected $fillable = ['disk', 'in_json', 'base_url', 'url', 'collection', 'model_type', 'model_id'];
 
     protected $casts = [
-        'in_json' => 'object',
+        'in_json' => 'array',
     ];
 
     /**
