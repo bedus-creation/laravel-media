@@ -27,7 +27,11 @@ class LaravelMediaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations')
+            __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
+
+        $this->publishes([
+            __DIR__.'/../config/laravel-media.php' => config_path('laravel-media.php'),
+        ], 'laravel-media');
     }
 }

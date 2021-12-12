@@ -53,6 +53,18 @@ trait HasBuilder
      *
      * @return $this
      */
+    public function fromDisk($name)
+    {
+        $this->_query['disk'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return $this
+     */
     public function toCollection($name)
     {
         $this->_collection = $name;

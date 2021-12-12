@@ -2,10 +2,10 @@
 
 namespace Aammui\LaravelMedia\Tests;
 
-use Aammui\LaravelMedia\Tests\TestCase;
 use Aammui\LaravelMedia\Facades\Media;
 use Aammui\LaravelMedia\Models\Media as ModelsMedia;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class StandAloneMediaTest extends TestCase
 {
@@ -51,5 +51,20 @@ class StandAloneMediaTest extends TestCase
             $url,
             Media::fromCollection('image')->getMedia()->first()->link()
         );
+    }
+
+    /** @test */
+    public function media_can_store_and_retrieve_from_particular_storage()
+    {
+        Storage::fake("s3");
+        Storage::fake("image");
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+        Media::toDisk('s3')->addMedia($image);
+        Media::toDisk('image')->addMedia($image);
+
+        $this->assertEquals(1, Media::fromDisk("image")->getMedia()->count());
+        $this->assertEquals(1, Media::fromDisk("s3")->getMedia()->count());
+        $this->assertEquals(2, Media::getMedia()->count());
     }
 }
