@@ -56,7 +56,7 @@ trait HasMedia
     {
         return $this->media()->create(
             [
-                'disk'       => 'local',
+                'disk'       => $this->_disk,
                 'collection' => $this->_collection,
                 'model_id'   => $this->id,
                 'model_type' => get_class($this),

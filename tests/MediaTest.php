@@ -6,6 +6,7 @@ use Aammui\LaravelMedia\Enum\Responsive;
 use Aammui\LaravelMedia\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class MediaTest extends TestCase
 {
@@ -16,23 +17,6 @@ class MediaTest extends TestCase
         $model = TestModel::create();
         $model->addMedia($image);
         $this->assertEquals(1, count(Media::all()));
-    }
-
-    /** @test */
-    public function media_can_retrive_to_a_model()
-    {
-        $image = UploadedFile::fake()->image('avatar.jpg');
-        $model = TestModel::create();
-        $model->addMedia($image);
-        $model->addMedia($image);
-        $this->assertInstanceOf(Collection::class, $model->getMedia());
-        $this->assertInstanceOf(Media::class, $model->getMedia()->first());
-        $this->assertEquals(2, $model->getMedia()->count());
-
-        // Assert built url is valid
-        foreach (Responsive::getConfig() as $key => $responsive) {
-            $this->assertRegExp("/http\:\/\/localhost\/{$key}\/.*/", $model->getMedia()->first()->link($key));
-        }
     }
 
     /** @test */
@@ -95,5 +79,22 @@ class MediaTest extends TestCase
             $url,
             $model->fromCollection('image')->getMedia()->first()->link()
         );
+    }
+
+    /** @test */
+    public function media_can_store_and_retrieve_from_particular_storage()
+    {
+        Storage::fake("s3");
+
+        /** @var TestModel $model */
+        $model = TestModel::query()->create();
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+        $model->toDisk("local")->addMedia($image);
+        $model->toDisk("s3")->addMedia($image);
+
+        $this->assertEquals(1, $model->fromDisk("local")->getMedia()->count());
+        $this->assertEquals(1, $model->fromDisk("s3")->getMedia()->count());
+        $this->assertEquals(2, $model->getMedia()->count());
     }
 }
