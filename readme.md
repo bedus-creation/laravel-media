@@ -15,6 +15,12 @@ Laravel Media Handler package.
 ```
 composer require aammui/laravel-media
 ```
+**Laravel Compatibility**
+
+| Laravel Version | Role Permission Version | Installation                                      |
+|-----------------|-------------------------|---------------------------------------------------|
+| 9.x             | 2.0.0                   | ```composer require aammui/laravel-media:2.0.0``` |
+| 8.x, 7.x, 6.x   | 1.0.0                   | ```composer require aammui/laravel-media:1.0.0``` |
 
 ### Publish assests
 
