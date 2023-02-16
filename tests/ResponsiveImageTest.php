@@ -43,7 +43,7 @@ class ResponsiveImageTest extends TestCase
 
         // Assert built url is valid
         foreach (Responsive::getConfig() as $key => $responsive) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "/http:\/\/localhost\/{$key}\/.*/", $model->getMedia()
                 ->first()
                 ->link($key)

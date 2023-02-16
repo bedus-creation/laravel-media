@@ -22,7 +22,7 @@ class ExtensionTest extends TestCase
     }
 
     /**
-     * @dataProvider docuementExtensionProvider
+     * @dataProvider documentExtensionProvider
      *
      * @test
      */
@@ -34,7 +34,7 @@ class ExtensionTest extends TestCase
     /**
      * @return \string[][]
      */
-    public function imageExtensionProvider(): array
+    public static function imageExtensionProvider(): array
     {
         return [
             ["jpg"],
@@ -45,7 +45,7 @@ class ExtensionTest extends TestCase
     /**
      * @return \string[][]
      */
-    public function docuementExtensionProvider(): array
+    public static function documentExtensionProvider(): array
     {
         return [
             ["pdf"],

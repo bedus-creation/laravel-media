@@ -21,7 +21,7 @@ class DocumentTest extends TestCase
 
         // Assert built url is valid
         foreach (Responsive::getConfig() as $key => $responsive) {
-            $this->assertRegExp("/http:\/\/localhost\/documents\/.*/", $model->getMedia()->first()->link($key));
+            $this->assertMatchesRegularExpression("/http:\/\/localhost\/documents\/.*/", $model->getMedia()->first()->link($key));
         }
     }
 }
