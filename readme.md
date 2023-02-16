@@ -19,6 +19,7 @@ composer require aammui/laravel-media
 
 | Laravel Version | Role Permission Version | Installation                                      |
 |-----------------|-------------------------|---------------------------------------------------|
+| 10.x            |                         | ```composer require aammui/laravel-media:3.0.0``` |
 | 9.x             | 2.0.0                   | ```composer require aammui/laravel-media:2.0.0``` |
 | 8.x, 7.x, 6.x   | 1.0.0                   | ```composer require aammui/laravel-media:1.0.0``` |
 
